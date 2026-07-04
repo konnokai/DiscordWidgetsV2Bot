@@ -24,7 +24,7 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
     public async Task Set(
         [Choice("title", "title"), Choice("sub-title", "sub-title"),
          Choice("stat-value-1", "stat-value-1"), Choice("stat-label-1", "stat-label-1"),
-         Choice("stat-value-2", "stat-value-2"),
+         Choice("stat-value-2", "stat-value-2"), Choice("stat-label-2", "stat-label-2"),
          Choice("stat-value-3", "stat-value-3"), Choice("stat-label-3", "stat-label-3"),
          Choice("stat-value-4", "stat-value-4"), Choice("stat-label-4", "stat-label-4"),
          Choice("stat-value-5", "stat-value-5"), Choice("stat-label-5", "stat-label-5"),
@@ -57,7 +57,7 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
     public async Task Clear(
         [Choice("title", "title"), Choice("sub-title", "sub-title"),
          Choice("stat-value-1", "stat-value-1"), Choice("stat-label-1", "stat-label-1"),
-         Choice("stat-value-2", "stat-value-2"),
+         Choice("stat-value-2", "stat-value-2"), Choice("stat-label-2", "stat-label-2"),
          Choice("stat-value-3", "stat-value-3"), Choice("stat-label-3", "stat-label-3"),
          Choice("stat-value-4", "stat-value-4"), Choice("stat-label-4", "stat-label-4"),
          Choice("stat-value-5", "stat-value-5"), Choice("stat-label-5", "stat-label-5"),
