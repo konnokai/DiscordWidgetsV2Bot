@@ -22,7 +22,7 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
 
     [SlashCommand("set", "設定字串欄位並推送")]
     public async Task Set(
-        [Choice("title", "title"), Choice("sub-title", "sub-title"),
+        [Choice("top-title", "top-title"), Choice("top-sub-title", "top-sub-title"),
          Choice("stat-value-1", "stat-value-1"), Choice("stat-label-1", "stat-label-1"),
          Choice("stat-value-2", "stat-value-2"), Choice("stat-label-2", "stat-label-2"),
          Choice("stat-value-3", "stat-value-3"), Choice("stat-label-3", "stat-label-3"),
@@ -39,7 +39,7 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
 
     [SlashCommand("image", "設定圖片欄位（URL）並推送")]
     public async Task Image(
-        [Choice("image", "image"), Choice("widget-preview-image", "widget-preview-image"),
+        [Choice("top-image", "top-image"), Choice("widget-preview-image", "widget-preview-image"),
          Choice("mini-profile-image", "mini-profile-image")]
         string field,
         string url)
@@ -55,7 +55,7 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
 
     [SlashCommand("clear", "清除欄位值並推送")]
     public async Task Clear(
-        [Choice("title", "title"), Choice("sub-title", "sub-title"),
+        [Choice("top-title", "top-title"), Choice("top-sub-title", "top-sub-title"),
          Choice("stat-value-1", "stat-value-1"), Choice("stat-label-1", "stat-label-1"),
          Choice("stat-value-2", "stat-value-2"), Choice("stat-label-2", "stat-label-2"),
          Choice("stat-value-3", "stat-value-3"), Choice("stat-label-3", "stat-label-3"),
@@ -63,7 +63,7 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
          Choice("stat-value-5", "stat-value-5"), Choice("stat-label-5", "stat-label-5"),
          Choice("stat-value-6", "stat-value-6"), Choice("stat-label-6", "stat-label-6"),
          Choice("mini-profile-text", "mini-profile-text"),
-         Choice("image", "image"), Choice("widget-preview-image", "widget-preview-image"),
+         Choice("top-image", "top-image"), Choice("widget-preview-image", "widget-preview-image"),
          Choice("mini-profile-image", "mini-profile-image")]
         string field)
     {

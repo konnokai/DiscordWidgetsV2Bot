@@ -9,9 +9,9 @@ public class WidgetService
     // 欄位定義：名稱對應 Developer Portal widget 編輯器的 Data Field
     public static readonly string[] StringFields =
     [
-        "title", "sub-title",
+        "top-title", "top-sub-title",
         "stat-value-1", "stat-label-1",
-        "stat-value-2",
+        "stat-value-2", "stat-label-2",
         "stat-value-3", "stat-label-3",
         "stat-value-4", "stat-label-4",
         "stat-value-5", "stat-label-5",
@@ -19,7 +19,7 @@ public class WidgetService
         "mini-profile-text",
     ];
 
-    public static readonly string[] ImageFields = ["image", "widget-preview-image", "mini-profile-image"];
+    public static readonly string[] ImageFields = ["top-image", "widget-preview-image", "mini-profile-image"];
 
     private static readonly string DataPath = Path.Combine("data", "widgets.json");
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
