@@ -18,7 +18,7 @@ Body: { "data": { "dynamic": [
 ## 前置步驟（Developer Portal / Discord 客戶端手動操作）
 
 1. 建立 application → Games → Social SDK 填表
-2. 在 Developer Portal 用 DevTools console 執行 experiment override（`2026-03-widget-config-editor`）開啟 Widget 編輯頁
+2. 開啟 Widget 編輯頁需要啟用 `2026-03-widget-config-editor` experiment override。可用 [油猴腳本](#油猴腳本自動啟用-widget-編輯器)自動套用，或手動在 Developer Portal 的 DevTools console 執行 snippet
 3. Widget 編輯器建立欄位（User Data 型別，名稱須與本專案欄位一致）、設 fallback，Save + Publish
 4. OAuth2 頁加 redirect URI，之後透過 `/widget setup` 的按鈕授權（`openid` + `sdk.social_layer` scope）
 5. Bot 頁取得 bot token
@@ -26,6 +26,18 @@ Body: { "data": { "dynamic": [
 7. 用 Discord Previews 的 console snippet 把 widget 加到個人檔案（`2026-03-application-widget-v2-renderer` experiment Variant 1）
 
 詳細操作見下方參考文章。
+
+## 油猴腳本：自動啟用 Widget 編輯器
+
+`discord-widget-config-editor.user.js` 會在你進入 Developer Portal 應用頁面時，自動套用 `2026-03-widget-config-editor` experiment override，省去每次手動貼 console snippet。
+
+**安裝：**
+
+1. 先安裝 [Tampermonkey](https://www.tampermonkey.net/)（或 Violentmonkey）瀏覽器擴充
+2. 點此一鍵安裝 → **[discord-widget-config-editor.user.js](https://raw.githubusercontent.com/konnokai/DiscordWidgetsV2Bot/master/discord-widget-config-editor.user.js)**（Tampermonkey 會攔截並跳出安裝畫面）
+3. 重新整理 Developer Portal 的應用頁面（`https://discord.com/developers/applications/*`），即可看到 Widget 編輯入口
+
+腳本每次頁面載入只會在 experiment store 就緒後套用一次，30 秒內未就緒則自動停止輪詢；已內建 `@updateURL`，之後可自動更新。
 
 ## 設定與執行
 
