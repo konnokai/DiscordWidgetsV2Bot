@@ -22,14 +22,12 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
 
     [SlashCommand("set", "設定字串欄位並推送")]
     public async Task Set(
-        [Choice("top-title", "top-title"), Choice("top-sub-title", "top-sub-title"),
-         Choice("stat-value-1", "stat-value-1"), Choice("stat-label-1", "stat-label-1"),
-         Choice("stat-value-2", "stat-value-2"), Choice("stat-label-2", "stat-label-2"),
-         Choice("stat-value-3", "stat-value-3"), Choice("stat-label-3", "stat-label-3"),
-         Choice("stat-value-4", "stat-value-4"), Choice("stat-label-4", "stat-label-4"),
-         Choice("stat-value-5", "stat-value-5"), Choice("stat-label-5", "stat-label-5"),
-         Choice("stat-value-6", "stat-value-6"), Choice("stat-label-6", "stat-label-6"),
-         Choice("mini-profile-text", "mini-profile-text")]
+        [Choice("top-title", "top-title"), Choice("top-sub-title-1", "top-sub-title-1"),
+         Choice("bottom-name-1", "bottom-name-1"), Choice("bottom-description-1", "bottom-description-1"),
+         Choice("bottom-name-2", "bottom-name-2"), Choice("bottom-description-2", "bottom-description-2"),
+         Choice("bottom-name-3", "bottom-name-3"), Choice("bottom-description-3", "bottom-description-3"),
+         Choice("bottom-name-4", "bottom-name-4"), Choice("bottom-description-4", "bottom-description-4"),
+         Choice("mini-profile-stat-text", "mini-profile-stat-text")]
         string field,
         string value)
     {
@@ -39,8 +37,11 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
 
     [SlashCommand("image", "設定圖片欄位（URL）並推送")]
     public async Task Image(
-        [Choice("top-image", "top-image"), Choice("widget-preview-image", "widget-preview-image"),
-         Choice("mini-profile-image", "mini-profile-image")]
+        [Choice("top-image", "top-image"), Choice("top-sub-icon-1", "top-sub-icon-1"),
+         Choice("bottom-image-1", "bottom-image-1"), Choice("bottom-image-2", "bottom-image-2"),
+         Choice("bottom-image-3", "bottom-image-3"), Choice("bottom-image-4", "bottom-image-4"),
+         Choice("mini-profile-stat-icon", "mini-profile-stat-icon"),
+         Choice("mini-profile-contained-image", "mini-profile-contained-image")]
         string field,
         string url)
     {
@@ -55,16 +56,17 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
 
     [SlashCommand("clear", "清除欄位值並推送")]
     public async Task Clear(
-        [Choice("top-title", "top-title"), Choice("top-sub-title", "top-sub-title"),
-         Choice("stat-value-1", "stat-value-1"), Choice("stat-label-1", "stat-label-1"),
-         Choice("stat-value-2", "stat-value-2"), Choice("stat-label-2", "stat-label-2"),
-         Choice("stat-value-3", "stat-value-3"), Choice("stat-label-3", "stat-label-3"),
-         Choice("stat-value-4", "stat-value-4"), Choice("stat-label-4", "stat-label-4"),
-         Choice("stat-value-5", "stat-value-5"), Choice("stat-label-5", "stat-label-5"),
-         Choice("stat-value-6", "stat-value-6"), Choice("stat-label-6", "stat-label-6"),
-         Choice("mini-profile-text", "mini-profile-text"),
-         Choice("top-image", "top-image"), Choice("widget-preview-image", "widget-preview-image"),
-         Choice("mini-profile-image", "mini-profile-image")]
+        [Choice("top-title", "top-title"), Choice("top-sub-title-1", "top-sub-title-1"),
+         Choice("bottom-name-1", "bottom-name-1"), Choice("bottom-description-1", "bottom-description-1"),
+         Choice("bottom-name-2", "bottom-name-2"), Choice("bottom-description-2", "bottom-description-2"),
+         Choice("bottom-name-3", "bottom-name-3"), Choice("bottom-description-3", "bottom-description-3"),
+         Choice("bottom-name-4", "bottom-name-4"), Choice("bottom-description-4", "bottom-description-4"),
+         Choice("mini-profile-stat-text", "mini-profile-stat-text"),
+         Choice("top-image", "top-image"), Choice("top-sub-icon-1", "top-sub-icon-1"),
+         Choice("bottom-image-1", "bottom-image-1"), Choice("bottom-image-2", "bottom-image-2"),
+         Choice("bottom-image-3", "bottom-image-3"), Choice("bottom-image-4", "bottom-image-4"),
+         Choice("mini-profile-stat-icon", "mini-profile-stat-icon"),
+         Choice("mini-profile-contained-image", "mini-profile-contained-image")]
         string field)
     {
         widgets.Clear(Context.User.Id, field);

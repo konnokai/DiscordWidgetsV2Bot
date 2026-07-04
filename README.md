@@ -9,11 +9,19 @@
 ```
 PATCH https://discord.com/api/v9/applications/{appId}/users/{userId}/identities/0/profile
 Body: { "data": { "dynamic": [
-  { "type": 1, "name": "title", "value": "字串" },
-  { "type": 3, "name": "image", "value": { "url": "https://..." } } ] } }
+  { "type": 1, "name": "top-title", "value": "字串" },
+  { "type": 3, "name": "top-image", "value": { "url": "https://..." } } ] } }
 ```
 
 `name` 對應 Developer Portal widget 編輯器中設定的 Data Field 名稱（type 1=字串、3=圖片）。欄位定義寫死在 `WidgetService.cs`，指令選項在 `WidgetModule.cs`。
+
+### 欄位一覽（共 19 個，需與 widget 編輯器的 Data Field 名稱一致）
+
+| 區塊 | 字串欄位（type 1） | 圖片欄位（type 3） |
+|---|---|---|
+| Widget Top | `top-title`、`top-sub-title-1` | `top-image`、`top-sub-icon-1` |
+| Widget Bottom（項目 1–4） | `bottom-name-N`、`bottom-description-N` | `bottom-image-N` |
+| Mini Profile | `mini-profile-stat-text` | `mini-profile-stat-icon`、`mini-profile-contained-image` |
 
 ## 前置步驟（Developer Portal / Discord 客戶端手動操作）
 

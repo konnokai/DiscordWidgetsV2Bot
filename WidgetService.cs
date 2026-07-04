@@ -9,17 +9,20 @@ public class WidgetService
     // 欄位定義：名稱對應 Developer Portal widget 編輯器的 Data Field
     public static readonly string[] StringFields =
     [
-        "top-title", "top-sub-title",
-        "stat-value-1", "stat-label-1",
-        "stat-value-2", "stat-label-2",
-        "stat-value-3", "stat-label-3",
-        "stat-value-4", "stat-label-4",
-        "stat-value-5", "stat-label-5",
-        "stat-value-6", "stat-label-6",
-        "mini-profile-text",
+        "top-title", "top-sub-title-1",
+        "bottom-name-1", "bottom-description-1",
+        "bottom-name-2", "bottom-description-2",
+        "bottom-name-3", "bottom-description-3",
+        "bottom-name-4", "bottom-description-4",
+        "mini-profile-stat-text",
     ];
 
-    public static readonly string[] ImageFields = ["top-image", "widget-preview-image", "mini-profile-image"];
+    public static readonly string[] ImageFields =
+    [
+        "top-image", "top-sub-icon-1",
+        "bottom-image-1", "bottom-image-2", "bottom-image-3", "bottom-image-4",
+        "mini-profile-stat-icon", "mini-profile-contained-image",
+    ];
 
     private static readonly string DataPath = Path.Combine("data", "widgets.json");
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };

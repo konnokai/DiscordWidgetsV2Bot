@@ -28,7 +28,7 @@ There are no tests. Real verification requires a live bot token: run, then `/wid
 Three files, deliberately minimal (no DB, no OAuth server, no interfaces):
 
 - `Program.cs` — Host wiring: `DiscordSocketClient` (GatewayIntents.None), `InteractionService`, global command registration on Ready. Fails fast with a clear message if token/appId are blank (note: `appsettings.json` ships empty strings, so guards must use `IsNullOrWhiteSpace`, not `?? throw`).
-- `WidgetService.cs` — Owns the field definitions (`StringFields` = type 1, `ImageFields` = type 3 wrapped as `{url}`), persists `userId → field → value` to `data/widgets.json`, and `PushAsync` builds/sends the PATCH payload. Non-2xx responses throw with the response body included.
+- `WidgetService.cs` — Owns the field definitions (`StringFields` = type 1, `ImageFields` = type 3 wrapped as `{url}`), persists `userId → field → value` to `data/widgets.json`, and `PushAsync` builds/sends the PATCH payload. Non-2xx responses throw with the response body included. Current widget config (19 fields): Widget Top = `top-title`, `top-sub-title-1`, `top-image`, `top-sub-icon-1`; Widget Bottom entries 1–4 = `bottom-name-N`, `bottom-description-N`, `bottom-image-N`; Mini Profile = `mini-profile-stat-text`, `mini-profile-stat-icon`, `mini-profile-contained-image`.
 - `WidgetModule.cs` — `/widget` command group. Field names are duplicated as `[Choice]` attributes here (Discord validates them server-side); **if you change a field name, update both `WidgetService` arrays and the `[Choice]` lists on `set`/`image`/`clear`.** Field names must exactly match the Data Field names configured in the Developer Portal widget editor.
 
 Constraints that must not be "fixed":
