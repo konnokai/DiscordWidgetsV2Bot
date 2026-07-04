@@ -20,8 +20,18 @@ Task Log(LogMessage msg) { Console.WriteLine(msg.ToString()); return Task.Comple
 client.Log += Log;
 interactions.Log += Log;
 
-client.Ready += () => interactions.RegisterCommandsGloballyAsync();
+client.Ready += async () =>
+{
+    var commands = await interactions.RegisterCommandsGloballyAsync();
+    Console.WriteLine($"{DateTime.Now:HH:mm:ss} Bot         已註冊 {commands.Count} 個全域指令：{string.Join("、", commands.Select(c => c.Name))}");
+};
 client.InteractionCreated += i => interactions.ExecuteCommandAsync(new SocketInteractionContext(client, i), host.Services);
+interactions.SlashCommandExecuted += (cmd, ctx, result) =>
+{
+    var status = result.IsSuccess ? "成功" : $"失敗：{result.ErrorReason}";
+    Console.WriteLine($"{DateTime.Now:HH:mm:ss} Bot         /{cmd.Module.SlashGroupName} {cmd.Name} 由 {ctx.User.Username} ({ctx.User.Id}) 觸發 → {status}");
+    return Task.CompletedTask;
+};
 
 var token = config["Discord:Token"];
 if (string.IsNullOrWhiteSpace(token))
