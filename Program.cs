@@ -10,6 +10,8 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddSingleton(new DiscordSocketClient(new DiscordSocketConfig { GatewayIntents = GatewayIntents.None }));
 builder.Services.AddSingleton(sp => new InteractionService(sp.GetRequiredService<DiscordSocketClient>()));
 builder.Services.AddSingleton<WidgetService>();
+builder.Services.AddSingleton<TwitchService>();
+builder.Services.AddHostedService(sp => sp.GetRequiredService<TwitchService>());
 var host = builder.Build();
 
 var client = host.Services.GetRequiredService<DiscordSocketClient>();

@@ -2,6 +2,8 @@ services:
   bot:
     build: .
     env_file: .env
+    environment:
+      - TZ=Asia/Taipei
     volumes:
       - ./data:/app/data
     restart: unless-stopped

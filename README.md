@@ -13,7 +13,7 @@ Body: { "data": { "dynamic": [
   { "type": 3, "name": "top-image", "value": { "url": "https://..." } } ] } }
 ```
 
-`name` 對應 Developer Portal widget 編輯器中設定的 Data Field 名稱（type 1=字串、2=數值、3=圖片）。欄位定義寫死在 `WidgetService.cs`，指令選項在 `WidgetModule.cs`。
+`name` 對應 Developer Portal widget 編輯器中設定的 Data Field 名稱（type 1=字串、2=數值、3=圖片）。欄位定義集中在 `WidgetService.cs` 的 `StringField` / `ImageField` enum（`[ChoiceDisplay]` 即 API 欄位名），指令選項自動由 enum 產生，改欄位只需要動 enum。
 
 ### 欄位一覽（共 19 個，需與 widget 編輯器的 Data Field 名稱一致）
 
@@ -96,9 +96,25 @@ docker compose up -d --build
 | `/widget setup` | 授權連結與使用說明 |
 | `/widget set <field> <value>` | 設定字串欄位並推送 |
 | `/widget image <field> <url>` | 設定圖片欄位並推送 |
-| `/widget clear <field>` | 清除欄位並推送 |
+| `/widget clear <field>` | 清除字串欄位並推送 |
+| `/widget clear-image <field>` | 清除圖片欄位並推送 |
 | `/widget show` | 顯示目前儲存的所有欄位 |
 | `/widget refresh` | 手動重新推送 |
+| `/twitch bind <channel> [field]` | 綁定 Twitch 頻道（接受名稱或網址），啟用開台偵測；可指定要更新的字串欄位 |
+| `/twitch unbind` | 解除綁定，停止開台偵測 |
+
+## Twitch 開台偵測（選用）
+
+綁定 Twitch 頻道後，bot 每 30 秒輪詢 [Twitch Helix API](https://dev.twitch.tv/docs/api/)，自動更新綁定時指定的字串欄位（預設 `bottom-description-3`）：
+
+- 開台中 → `正在 Twitch 開台中!`
+- 未開台 → `上次直播時間: yyyy/MM/dd HH:mm`（綁定時以最新 VOD 時間初始化，之後於下台當下記錄）
+
+僅在欄位內容實際變化時才推送到 Discord（開台／下台狀態轉換），不會每 30 秒都打 identity API。若推送失敗（例如欄位與 Developer Portal 設定不符），會略過該次更新並私訊通知，同一次狀態轉換只通知一次。
+
+**啟用方式**：到 [Twitch Developer Console](https://dev.twitch.tv/console/apps) 建立 application，取得 Client ID 與 Client Secret，設定 `TWITCH__CLIENTID` / `TWITCH__CLIENTSECRET` 環境變數。啟動時會用 client credentials flow 驗證憑證，**未設定或驗證失敗只會停用 Twitch 功能**（console 有 log），`/widget` 等其他指令不受影響。
+
+綁定資料存於 `data/twitch.json`。時間以容器時區顯示（docker-compose 已設 `TZ=Asia/Taipei`）。
 
 ## 參考文案
 
