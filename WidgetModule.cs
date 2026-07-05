@@ -21,56 +21,40 @@ public class WidgetModule(WidgetService widgets) : InteractionModuleBase<SocketI
     }
 
     [SlashCommand("set", "設定字串欄位並推送")]
-    public async Task Set(
-        [Choice("top-title", "top-title"), Choice("top-sub-title-1", "top-sub-title-1"),
-         Choice("bottom-name-1", "bottom-name-1"), Choice("bottom-description-1", "bottom-description-1"),
-         Choice("bottom-name-2", "bottom-name-2"), Choice("bottom-description-2", "bottom-description-2"),
-         Choice("bottom-name-3", "bottom-name-3"), Choice("bottom-description-3", "bottom-description-3"),
-         Choice("bottom-name-4", "bottom-name-4"), Choice("bottom-description-4", "bottom-description-4"),
-         Choice("mini-profile-stat-text", "mini-profile-stat-text")]
-        string field,
-        string value)
+    public async Task Set(StringField field, string value)
     {
-        widgets.Set(Context.User.Id, field, value);
-        await PushAndReportAsync($"`{field}` = {value}");
+        var name = field.ApiName();
+        widgets.Set(Context.User.Id, name, value);
+        await PushAndReportAsync($"`{name}` = {value}");
     }
 
     [SlashCommand("image", "設定圖片欄位（URL）並推送")]
-    public async Task Image(
-        [Choice("top-image", "top-image"), Choice("top-sub-icon-1", "top-sub-icon-1"),
-         Choice("bottom-image-1", "bottom-image-1"), Choice("bottom-image-2", "bottom-image-2"),
-         Choice("bottom-image-3", "bottom-image-3"), Choice("bottom-image-4", "bottom-image-4"),
-         Choice("mini-profile-stat-icon", "mini-profile-stat-icon"),
-         Choice("mini-profile-contained-image", "mini-profile-contained-image")]
-        string field,
-        string url)
+    public async Task Image(ImageField field, string url)
     {
         if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || uri.Scheme is not ("http" or "https"))
         {
             await RespondAsync("URL 格式不正確，需為 http(s) 絕對網址。", ephemeral: true);
             return;
         }
-        widgets.Set(Context.User.Id, field, url);
-        await PushAndReportAsync($"`{field}` = <{url}>");
+        var name = field.ApiName();
+        widgets.Set(Context.User.Id, name, url);
+        await PushAndReportAsync($"`{name}` = <{url}>");
     }
 
-    [SlashCommand("clear", "清除欄位值並推送")]
-    public async Task Clear(
-        [Choice("top-title", "top-title"), Choice("top-sub-title-1", "top-sub-title-1"),
-         Choice("bottom-name-1", "bottom-name-1"), Choice("bottom-description-1", "bottom-description-1"),
-         Choice("bottom-name-2", "bottom-name-2"), Choice("bottom-description-2", "bottom-description-2"),
-         Choice("bottom-name-3", "bottom-name-3"), Choice("bottom-description-3", "bottom-description-3"),
-         Choice("bottom-name-4", "bottom-name-4"), Choice("bottom-description-4", "bottom-description-4"),
-         Choice("mini-profile-stat-text", "mini-profile-stat-text"),
-         Choice("top-image", "top-image"), Choice("top-sub-icon-1", "top-sub-icon-1"),
-         Choice("bottom-image-1", "bottom-image-1"), Choice("bottom-image-2", "bottom-image-2"),
-         Choice("bottom-image-3", "bottom-image-3"), Choice("bottom-image-4", "bottom-image-4"),
-         Choice("mini-profile-stat-icon", "mini-profile-stat-icon"),
-         Choice("mini-profile-contained-image", "mini-profile-contained-image")]
-        string field)
+    [SlashCommand("clear", "清除字串欄位值並推送")]
+    public async Task Clear(StringField field)
     {
-        widgets.Clear(Context.User.Id, field);
-        await PushAndReportAsync($"已清除 `{field}`");
+        var name = field.ApiName();
+        widgets.Clear(Context.User.Id, name);
+        await PushAndReportAsync($"已清除 `{name}`");
+    }
+
+    [SlashCommand("clear-image", "清除圖片欄位值並推送")]
+    public async Task ClearImage(ImageField field)
+    {
+        var name = field.ApiName();
+        widgets.Clear(Context.User.Id, name);
+        await PushAndReportAsync($"已清除 `{name}`");
     }
 
     [SlashCommand("show", "顯示目前儲存的所有欄位")]
